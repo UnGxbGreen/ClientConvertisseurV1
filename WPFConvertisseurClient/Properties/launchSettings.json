@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WPFConvertisseurClient (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WPFConvertisseurClient (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
