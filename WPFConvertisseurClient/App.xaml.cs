@@ -18,6 +18,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WPFConvertisseurClient.Views;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -46,6 +47,10 @@ namespace WPFConvertisseurClient
         {
             m_window = new MainWindow();
             m_window.Activate();
+            Frame rootFrame = new Frame();
+            this.m_window.Content = rootFrame;
+            m_window.Activate();
+            rootFrame.Navigate(typeof(ConvertisseurEuroPage));
         }
 
         private Window m_window;

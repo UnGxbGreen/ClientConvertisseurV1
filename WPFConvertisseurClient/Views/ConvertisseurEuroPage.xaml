@@ -1,0 +1,89 @@
+<!--  Copyright (c) Microsoft Corporation and Contributors.  -->
+<!--  Licensed under the MIT License.  -->
+
+<Page
+    x:Class="WPFConvertisseurClient.Views.ConvertisseurEuroPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WPFConvertisseurClient.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="HotPink">
+        <TextBlock
+            Name="rst"
+            Margin="0,10"
+            FontSize="100"
+            FontStyle="Italic"
+            FontWeight="ExtraBold"
+            Foreground="DarkTurquoise"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Text="Montant en Euro" />
+        <TextBox
+            Name="five"
+            Width="500"
+            Height="50"
+            Background="IndianRed"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="rst"
+            Text="ReadOnly"
+            TextAlignment="Center" />
+
+        <TextBlock
+            Name="nd"
+            Margin="0,12"
+            FontSize="100"
+            FontStyle="Italic"
+            FontWeight="ExtraBold"
+            Foreground="DarkTurquoise"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="five"
+            Text="Devise" />
+        <ComboBox
+            Name="four"
+            Width="500"
+            Height="50"
+            Margin="0,10"
+            Background="IndianRed"
+            DisplayMemberPath="NomDevise"
+            ItemsSource="{Binding Devises}"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="nd" />
+
+        <Button
+            Name="btn"
+            Width="500"
+            Height="50"
+            Margin="0,0"
+            Background="IndianRed"
+            Content="Convertir"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="four" />
+
+        <TextBlock
+            Name="rd"
+            Margin="0,0"
+            FontSize="100"
+            FontStyle="Italic"
+            FontWeight="ExtraBold"
+            Foreground="DarkTurquoise"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="btn"
+            Text="Montant en devise" />
+        <TextBox
+            Name="devise"
+            Width="500"
+            Height="50"
+            Margin="0,0"
+            Background="IndianRed"
+            IsReadOnly="true"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="rd"
+            Text="Read"
+            TextAlignment="Center" />
+
+
+    </RelativePanel>
+</Page>
