@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Portable;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WPFConvertisseurClient.Models;
@@ -39,6 +40,16 @@ namespace WPFConvertisseurClient.Views
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private ObservableCollection<Devise> devises;
+       
+
+        private double montantEnEuros;
+        private Devise selectedDevise;
+        private double montantEnDevise;
+
+        WSService service = new WSService("https://localhost:7175/api/");
+
+
+
 
         public ObservableCollection<Devise> Devises
         {
@@ -52,6 +63,48 @@ namespace WPFConvertisseurClient.Views
                 devises = value;
                 OnPropertyChanged("Devises");
 
+            }
+        }
+
+        public double MontantEnEuros
+        {
+            get
+            {
+                return montantEnEuros;
+            }
+
+            set
+            {
+                montantEnEuros = value;
+                OnPropertyChanged("MontantEnEuros");
+            }
+        }
+
+        public Devise SelectedDevise
+        {
+            get
+            {
+                return selectedDevise;
+            }
+
+            set
+            {
+                selectedDevise = value;
+                OnPropertyChanged("SelectedDevise");
+            }
+        }
+
+        public double MontantEnDevise
+        {
+            get
+            {
+                return montantEnDevise;
+            }
+
+            set
+            {
+                montantEnDevise = value;
+                OnPropertyChanged("MontantEnDevise");
             }
         }
 
@@ -76,6 +129,11 @@ namespace WPFConvertisseurClient.Views
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            MontantEnDevise = MontantEnEuros*SelectedDevise.TauxDevise;
         }
     }
 }

@@ -36,5 +36,15 @@ namespace WPFConvertisseurClient.Services
                 return null;
             }
         }
+
+        public double CalculMontantDevise(double montant, double taux)
+        {
+            if (montant < 0)
+            {
+                throw new ArgumentException("Impossible de calculer un montant inférieur a 0 !");
+            }
+
+            return Math.Round(montant * taux, 2);
+        }
     }
 }

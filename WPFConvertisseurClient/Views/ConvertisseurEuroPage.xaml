@@ -28,7 +28,7 @@
             Background="IndianRed"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="rst"
-            Text="ReadOnly"
+            Text="{Binding MontantEnEuros, Mode=TwoWay}"
             TextAlignment="Center" />
 
         <TextBlock
@@ -50,7 +50,8 @@
             DisplayMemberPath="NomDevise"
             ItemsSource="{Binding Devises}"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.Below="nd" />
+            RelativePanel.Below="nd"
+            SelectedItem="{Binding SelectedDevise, Mode=TwoWay}" />
 
         <Button
             Name="btn"
@@ -58,6 +59,7 @@
             Height="50"
             Margin="0,0"
             Background="IndianRed"
+            Click="btn_Click"
             Content="Convertir"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="four" />
@@ -73,7 +75,7 @@
             RelativePanel.Below="btn"
             Text="Montant en devise" />
         <TextBox
-            Name="devise"
+            Name="resultat"
             Width="500"
             Height="50"
             Margin="0,0"
@@ -81,7 +83,7 @@
             IsReadOnly="true"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="rd"
-            Text="Read"
+            Text="{Binding MontantEnDevise, Mode=TwoWay}"
             TextAlignment="Center" />
 
 

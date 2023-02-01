@@ -10,5 +10,6 @@ namespace WPFConvertisseurClient.Services
     public interface IService
     {
         Task<List<Devise>> GetDevisesAsync(string nomControleur);
+        double CalculMontantDevise(double montant, double taux);
     }
 }
