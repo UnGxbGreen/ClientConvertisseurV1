@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ClinetConvertisseurV2 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ClinetConvertisseurV2 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

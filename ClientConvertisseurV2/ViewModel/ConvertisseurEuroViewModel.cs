@@ -1,46 +1,23 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
- 
-using Microsoft.UI.Xaml;
+ï»¿using ClientConvertisseurV2.Models;
+using ClientConvertisseurV2.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Portable;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using WPFConvertisseurClient.Models;
-using WPFConvertisseurClient.Services;
+using System.Text;
+using System.Threading.Tasks;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace WPFConvertisseurClient.Views
+namespace ClientConvertisseurV2.ViewModel
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class ConvertisseurEuroPage : Page, INotifyPropertyChanged
+    public class ConvertisseurEuroViewModel: ObservableObject
     {
-        public ConvertisseurEuroPage()
-        {
-            this.InitializeComponent();
-            this.DataContext = this;
-            GetDataOnLoadAsync();
-        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private ObservableCollection<Devise> devises;
-       
+
 
         private double montantEnEuros;
         private Devise selectedDevise;
@@ -48,7 +25,10 @@ namespace WPFConvertisseurClient.Views
 
         WSService service = new WSService("https://localhost:7175/api/");
 
+        public ConvertisseurEuroViewModel()
+        {
 
+        }
 
 
         public ObservableCollection<Devise> Devises
@@ -110,11 +90,11 @@ namespace WPFConvertisseurClient.Views
 
         private async void GetDataOnLoadAsync()
         {
-            WSService service = new WSService("https://localhost:7175/api/");
+            
             List<Devise> result = await service.GetDevisesAsync("devises");
-            if (result==null)
+            if (result == null)
             {
-                ShowAsync("API non dispo");
+                
             }
             else
             {
@@ -131,28 +111,7 @@ namespace WPFConvertisseurClient.Views
             }
         }
 
-        private async void ShowAsync(string message)
-        {
-            ContentDialog errorDialog = new ContentDialog
-            {
-                Title = "ERROR",
-                Content = message,
-                CloseButtonText = "Oui Monsieur"
-            };
+      
 
-            errorDialog.XamlRoot = this.Content.XamlRoot;
-            ContentDialogResult result = await errorDialog.ShowAsync();
-        }
-
-        private void btn_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedDevise==null)
-            {
-                ShowAsync("Sélectionner une devise !");
-
-            }
-            else
-            MontantEnDevise = MontantEnEuros*SelectedDevise.TauxDevise;
-        }
     }
 }
