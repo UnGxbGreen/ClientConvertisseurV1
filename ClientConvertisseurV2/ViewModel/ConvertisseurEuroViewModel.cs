@@ -1,6 +1,7 @@
 ﻿using ClientConvertisseurV2.Models;
 using ClientConvertisseurV2.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,8 @@ namespace ClientConvertisseurV2.ViewModel
         private Devise selectedDevise;
         private double montantEnDevise;
 
-        WSService service = new WSService("https://localhost:7175/api/");
 
-        public ConvertisseurEuroViewModel()
-        {
-
-        }
-
+     
 
         public ObservableCollection<Devise> Devises
         {
@@ -41,7 +37,7 @@ namespace ClientConvertisseurV2.ViewModel
             set
             {
                 devises = value;
-                OnPropertyChanged("Devises");
+                OnPropertyChanged();
 
             }
         }
@@ -56,7 +52,7 @@ namespace ClientConvertisseurV2.ViewModel
             set
             {
                 montantEnEuros = value;
-                OnPropertyChanged("MontantEnEuros");
+                OnPropertyChanged();
             }
         }
 
@@ -70,7 +66,7 @@ namespace ClientConvertisseurV2.ViewModel
             set
             {
                 selectedDevise = value;
-                OnPropertyChanged("SelectedDevise");
+                OnPropertyChanged();
             }
         }
 
@@ -84,22 +80,53 @@ namespace ClientConvertisseurV2.ViewModel
             set
             {
                 montantEnDevise = value;
-                OnPropertyChanged("MontantEnDevise");
+                OnPropertyChanged();
             }
         }
 
-        private async void GetDataOnLoadAsync()
+        public async void GetDataOnLoadAsync()
         {
-            
+            WSService service = new WSService("https://localhost:7175/api/");
             List<Devise> result = await service.GetDevisesAsync("devises");
             if (result == null)
             {
-                
+                ShowAsync("API non dispo");
             }
             else
             {
                 Devises = new ObservableCollection<Devise>(result);
             }
+        }
+
+        public IRelayCommand BtnSetConversion { get; }
+        public ConvertisseurEuroViewModel()
+        {
+            BtnSetConversion = new RelayCommand(ActionSetConversion);
+            GetDataOnLoadAsync();
+
+        }
+        public void ActionSetConversion()
+        {
+            if (SelectedDevise == null)
+            {
+                ShowAsync("Sélectionner une devise !");
+
+            }
+            else
+                MontantEnDevise = MontantEnEuros * SelectedDevise.TauxDevise;
+        }
+
+        private async void ShowAsync(string message)
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "ERROR",
+                Content = message,
+                CloseButtonText = "Oui Monsieur"
+            };
+
+            errorDialog.XamlRoot = App.MainRoot.XamlRoot;
+            ContentDialogResult result = await errorDialog.ShowAsync();
         }
 
         protected void OnPropertyChanged(string name)

@@ -59,6 +59,7 @@
             Height="50"
             Margin="0,0"
             Background="IndianRed"
+            Command="{Binding BtnSetConversion}"
             Content="Convertir"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="four" />

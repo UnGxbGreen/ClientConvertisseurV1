@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using ClientConvertisseurV2.ViewModel;
 using ClientConvertisseurV2.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -30,6 +33,7 @@ namespace ClientConvertisseurV2
     /// </summary>
     public partial class App : Application
     {
+        public static FrameworkElement MainRoot { get; private set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -37,7 +41,12 @@ namespace ClientConvertisseurV2
         public App()
         {
             this.InitializeComponent();
+            Ioc.Default.ConfigureServices(
+             new ServiceCollection()
+             .AddSingleton<ConvertisseurEuroViewModel>()
+             .BuildServiceProvider());
         }
+
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -51,8 +60,14 @@ namespace ClientConvertisseurV2
             this.m_window.Content = rootFrame;
             m_window.Activate();
             rootFrame.Navigate(typeof(ConvertisseurEuroPage));
+            MainRoot = m_window.Content as FrameworkElement;
         }
 
         private Window m_window;
+
+        public ConvertisseurEuroViewModel ConvertisseurEuroVM
+        {
+            get { return Ioc.Default.GetService<ConvertisseurEuroViewModel>(); }
+        }
     }
 }
